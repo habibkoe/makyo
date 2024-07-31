@@ -33,6 +33,8 @@ export const Select: Story = {
     }],
 
     withSearch: true,
+    multiple: true,
+    outlined: true,
     id: "dd-1",
     optionLabel: "Search Here",
     onSelect: () => console.log("test data")

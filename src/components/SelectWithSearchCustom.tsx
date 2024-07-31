@@ -6,6 +6,8 @@ interface OptionType {
 }
 
 interface Props {
+  multiple: boolean;
+  outlined: boolean;
   optionLabel: string;
   id: string;
   withSearch: boolean;
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const SelectWithSearchCustom = ({
+  multiple = true,
+  outlined = true,
   optionLabel,
   id,
   withSearch = true,
@@ -51,13 +55,24 @@ const SelectWithSearchCustom = ({
   }, []);
 
   const handleSelect = (option: OptionType) => {
-    setSelectedOptions((prevSelected) => {
-      const newSelected = prevSelected.some((o) => o.value === option.value)
-        ? prevSelected.filter((o) => o.value !== option.value)
-        : [...prevSelected, option];
-      onSelect(newSelected);
-      return newSelected;
-    });
+    if (multiple) {
+      setSelectedOptions((prevSelected) => {
+        const newSelected = prevSelected.some((o) => o.value === option.value)
+          ? prevSelected.filter((o) => o.value !== option.value)
+          : [...prevSelected, option];
+        onSelect(newSelected);
+        return newSelected;
+      });
+    } else {
+      setSelectedOptions((prevSelected) => {
+        const newSelected = prevSelected.some((o) => o.value === option.value)
+          ? prevSelected.filter((o) => o.value !== option.value)
+          : [option];
+        onSelect(newSelected);
+        return newSelected;
+      });
+    }
+
     setSearchTerm("");
   };
 
@@ -87,10 +102,12 @@ const SelectWithSearchCustom = ({
   };
 
   return (
-    <div id={id} className="relative w-full space-y-3" ref={containerRef}>
-      {optionLabel ? <div className="w-full px-4 font-bold">{optionLabel}</div> : null}
+    <div id={id} className="relative w-full space-y-3 z-[1050]" ref={containerRef}>
+      {optionLabel ? (
+        <div className="w-full px-4 font-bold">{optionLabel}</div>
+      ) : null}
       <div
-        className="flex flex-wrap items-center px-5 py-3 border border-gray-400 rounded-full cursor-text"
+        className={`flex flex-wrap items-center px-5 py-3 border border-gray-400 rounded-full cursor-pointer ${outlined ? '' : 'bg-gray-400'}`}
         onClick={() => setShowOptions(true)}
       >
         {selectedOptions.map((option) => (
@@ -107,13 +124,13 @@ const SelectWithSearchCustom = ({
             </button>
           </div>
         ))}
-        <input className="flex-grow p-0 focus:outline-none" type="text" />
+        <input className={`flex-grow p-0 cursor-pointer focus:outline-none ${outlined ? '' : 'bg-gray-400'}`} type="text" />
       </div>
       {showOptions && (
         <div className="absolute z-50 w-full p-2 mt-2 overflow-y-auto bg-white border border-gray-400 max-h-48 rounded-3xl">
           {withSearch ? (
             <input
-              className="flex-grow w-full px-5 py-3 border border-gray-400 rounded-2xl focus:outline-none"
+              className="flex-grow w-full px-5 py-3 mb-2 border border-gray-400 rounded-2xl focus:outline-none"
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -122,7 +139,7 @@ const SelectWithSearchCustom = ({
 
           {filteredOptions.map((option) => (
             <div
-              className={`hover:bg-blue-300 p-2 cursor-pointer ${selectedOptions.some((o) => o.value === option.value) ? "bg-blue-300" : "bg-white"}`}
+              className={`hover:bg-blue-300 p-2 cursor-pointer rounded-xl ${selectedOptions.some((o) => o.value === option.value) ? "bg-blue-300" : "bg-white"}`}
               key={option.value}
               onClick={() => handleSelect(option)}
             >

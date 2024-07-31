@@ -29,7 +29,15 @@ function App() {
       <div className="flex flex-col justify-between h-screen max-w-4xl py-5 mx-auto">
         <div>
           <form action="" className="w-full">
-            <SelectWithSearchCustom onSelect={onChange} datas={datas} />
+            <SelectWithSearchCustom
+              onSelect={onChange}
+              datas={datas}
+              id="dd-i"
+              multiple={true}
+              optionLabel="Search Custom"
+              outlined={true}
+              withSearch={true}
+            />
           </form>
         </div>
       </div>
