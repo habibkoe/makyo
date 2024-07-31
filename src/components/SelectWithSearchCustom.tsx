@@ -120,7 +120,7 @@ const SelectWithSearchCustom = ({
               className="flex items-center justify-center w-5 h-5 mr-1 font-bold text-black bg-red-300 border border-gray-600 rounded-full cursor-pointer"
               onClick={() => handleRemove(option)}
             >
-              x
+              <span className="mb-1">x</span>
             </button>
           </div>
         ))}
