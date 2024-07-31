@@ -6,6 +6,7 @@ interface OptionType {
 }
 
 interface Props {
+  placeholder?: string;
   multiple: boolean;
   outlined: boolean;
   optionLabel: string;
@@ -22,6 +23,7 @@ const SelectWithSearchCustom = ({
   id,
   withSearch = true,
   datas,
+  placeholder = "",
   onSelect,
 }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -102,12 +104,16 @@ const SelectWithSearchCustom = ({
   };
 
   return (
-    <div id={id} className="relative w-full space-y-3 z-[1050]" ref={containerRef}>
+    <div
+      id={id}
+      className="relative w-full space-y-3 z-[1050]"
+      ref={containerRef}
+    >
       {optionLabel ? (
         <div className="w-full px-4 font-bold">{optionLabel}</div>
       ) : null}
       <div
-        className={`flex flex-wrap items-center px-5 py-3 border border-gray-400 rounded-full cursor-pointer ${outlined ? '' : 'bg-gray-400'}`}
+        className={`flex flex-wrap items-center px-5 py-3 border border-gray-400 rounded-full cursor-pointer ${outlined ? "" : "bg-gray-400"}`}
         onClick={() => setShowOptions(true)}
       >
         {selectedOptions.map((option) => (
@@ -124,17 +130,34 @@ const SelectWithSearchCustom = ({
             </button>
           </div>
         ))}
-        <input className={`flex-grow p-0 cursor-pointer focus:outline-none ${outlined ? '' : 'bg-gray-400'}`} type="text" />
+        <input
+          className={`flex-grow p-0 cursor-pointer focus:outline-none ${outlined ? "" : "bg-gray-400"}`}
+          type="text"
+        />
       </div>
       {showOptions && (
         <div className="absolute z-50 w-full p-2 mt-2 overflow-y-auto bg-white border border-gray-400 max-h-48 rounded-3xl">
           {withSearch ? (
-            <input
-              className="flex-grow w-full px-5 py-3 mb-2 border border-gray-400 rounded-2xl focus:outline-none"
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <div className="flex items-center w-full gap-2 p-3 mb-2 border border-gray-400 rounded-2xl">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-gray-500"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                </svg>
+              </span>
+              <input
+                placeholder={placeholder}
+                className="flex-grow w-full focus:outline-none"
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
           ) : null}
 
           {filteredOptions.map((option) => (

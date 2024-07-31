@@ -37,6 +37,7 @@ export const Select: Story = {
     outlined: true,
     id: "dd-1",
     optionLabel: "Search Here",
+    placeholder: "Seach data...",
     onSelect: () => console.log("test data")
   },
 };

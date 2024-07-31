@@ -37,6 +37,7 @@ function App() {
               optionLabel="Search Custom"
               outlined={true}
               withSearch={true}
+              placeholder="Seach data..."
             />
           </form>
         </div>
