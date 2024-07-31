@@ -1,8 +1,11 @@
 {
-  "name": "makyo",
+  "name": "makyo-select-with-search",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -40,6 +43,7 @@
     "tailwindcss": "^3.4.7",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
+    "vite-plugin-dts": "^4.0.0-beta.2",
     "vite-tsconfig-paths": "^4.3.2"
   }
 }
